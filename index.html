@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per la mia Biscottina ❤️</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --rosa-tenue: #ffe4e9;
+            --rosa-medio: #ffb6c1;
+            --rosa-scuro: #ff69b4;
+            --oro: #ffd700;
+            --oro-chiaro: #fff8dc;
+            --bianco: #ffffff;
+            --rosa-profondo: #db7093;
+            --text-dark: #4a4a4a;
+            --text-light: #777;
+            --rosso: #e74c3c;
+            --verde: #27ae60;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--rosa-tenue) 0%, var(--oro-chiaro) 50%, var(--rosa-tenue) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-dark);
+        }
+
+        /* ============================================
+           SCHERMATA PASSWORD
+        ============================================ */
+        #password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--rosa-tenue) 0%, var(--oro-chiaro) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .password-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fade-in-up 0.8s ease;
+        }
+
+        .password-box h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--rosa-profondo);
+            margin-bottom: 0.5rem;
+        }
+
+        .password-box .lock-icon {
+            font-size: 4rem;
+            color: var(--rosa-scuro);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .password-box p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--rosa-medio);
+            border-radius: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .password-input:focus {
+            border-color: var(--rosa-scuro);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .password-btn {
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--rosa-scuro) 0%, var(--rosa-profondo) 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .password-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+        }
+
+        .error-msg {
+            color: var(--rosso);
+            margin-top: 1rem;
+            display: none;
+            font-weight: 500;
+        }
+
+        .hint {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* ============================================
+           CONTENUTO PRINCIPALE (inizialmente nascosto)
+        ============================================ */
+        #main-content {
+            display: none;
+        }
+
+        /* ============================================
+           ANIMAZIONI
+        ============================================ */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ============================================
+           EFFETTI PARTICELLE - CUORI
+        ============================================ */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: float-up 4s ease-out forwards;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart-particle {
+            color: var(--rosa-scuro);
+            font-size: 24px;
+        }
+
+        /* ============================================
+           HEADER HERO
+        ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+        }
+
+        .hero-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--rosa-profondo);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+            animation: fade-in-up 1.5s ease-out;
+            position: relative;
+        }
+
+        .hero-title .highlight {
+            color: var(--oro);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text-light);
+            margin-top: 1rem;
+            animation: fade-in-up 1.5s ease-out 0.3s both;
+            font-style: italic;
+        }
+
+        .secret-message-container {
+            margin-top: 2rem;
+            padding: 1.5rem 3rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: fade-in-up 1.5s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .secret-message-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .secret-message-container:hover::before {
+            left: 100%;
+        }
+
+        .secret-message-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,105,180,0.3);
+        }
+
+        .secret-hint {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--rosa-profondo);
+        }
+
+        .secret-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--oro);
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.5s ease;
+        }
+
+        .secret-message-container:hover .secret-hint {
+            opacity: 0;
+            max-height: 0;
+            display: none;
+        }
+
+        .secret-message-container:hover .secret-message {
+            opacity: 1;
+            max-height: 100px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            color: var(--rosa-profondo);
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* ============================================
+           SEZIONE: DIVENTA IL MIO VALENTINO! 💝
+        ============================================ */
+        .valentine-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255,182,193,0.4) 0%, rgba(255,215,0,0.2) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .valentine-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 40px;
+            padding: 4rem 3rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255,105,180,0.3);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(255,105,180,0.3); }
+            50% { box-shadow: 0 20px 80px rgba(255,105,180,0.5); }
+        }
+
+        .valentine-question {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--rosa-profondo);
+            margin-bottom: 1rem;
+        }
+
+        .valentine-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .valentine-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .valentine-btn {
+            padding: 1.5rem 4rem;
+            font-size: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .valentine-btn-si {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(39,174,96,0.4);
+        }
+
+        .valentine-btn-si:hover {
+            transform: scale(1.1) rotate(-3deg);
+            box-shadow: 0 15px 40px rgba(39,174,96,0.6);
+        }
+
+        .valentine-btn-no {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(231,76,60,0.4);
+        }
+
+        .valentine-btn-no:hover {
+            transform: scale(0.95);
+        }
+
+        .valentine-btn-no.running-away {
+            position: fixed;
+            transition: all 0.3s ease;
+            z-index: 9999;
+        }
+
+        /* Risposta SÌ */
+        .valentine-success {
+            display: none;
+            animation: success-pop 0.8s ease;
+        }
+
+        @keyframes success-pop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-emoji {
+            font-size: 6rem;
+            animation: bounce-hearts 1s ease infinite;
+        }
+
+        @keyframes bounce-hearts {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .success-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--rosa-profondo);
+            margin-top: 1rem;
+        }
+
+        .success-subtext {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+        }
+
+        /* Risposta NO (schermata triste) */
+        .valentine-sad {
+            display: none;
+        }
+
+        .sad-emoji {
+            font-size: 5rem;
+            animation: crying 2s ease infinite;
+        }
+
+        @keyframes crying {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        .sad-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--rosa-profondo);
+            margin-top: 1rem;
+        }
+
+        .try-again-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--rosa-scuro);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .try-again-btn:hover {
+            transform: scale(1.05);
+            background: var(--rosa-profondo);
+        }
+
+        /* ============================================
+           PLAYER YOUTUBE
+        ============================================ */
+        .youtube-section {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .youtube-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--rosa-profondo);
+            margin-bottom: 1.5rem;
+        }
+
+        .youtube-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .youtube-container iframe {
+            width: 100%;
+            height: 340px;
+            border: none;
+        }
+
+        /* ============================================
+           SEZIONI GENERALI
+        ============================================ */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--rosa-profondo);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--oro), transparent);
+            margin: 1rem auto;
+        }
+
+        /* ============================================
+           SEZIONE: PERCHÉ SEI SPECIALE
+        ============================================ */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .reason-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reason-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rosa-medio), var(--oro));
+        }
+
+        .reason-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255,105,180,0.2);
+        }
+
+        .reason-icon {
+            font-size: 3rem;
+            color: var(--rosa-scuro);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .reason-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--rosa-profondo);
+            margin-bottom: 0.5rem;
+        }
+
+        .reason-text {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           SEZIONE: MESSAGGI SEGRETI
+        ============================================ */
+        .messages-section {
+            text-align: center;
+        }
+
+        .love-button {
+            background: linear-gradient(135deg, var(--rosa-scuro) 0%, var(--rosa-profondo) 100%);
+            color: var(--bianco);
+            border: none;
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,105,180,0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .love-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,105,180,0.6);
+        }
+
+        .message-display {
+            margin-top: 2rem;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secret-love-message {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--rosa-profondo);
+            max-width: 600px;
+            animation: message-appear 0.5s ease;
+        }
+
+        @keyframes message-appear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ============================================
+           SEZIONE: IL NOSTRO TEMPO INSIEME
+        ============================================ */
+        .time-section {
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,228,233,0.5) 100%);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+        }
+
+        .timer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .timer-box {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .timer-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--rosa-profondo);
+            display: block;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .anniversary-info {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: var(--rosa-profondo);
+        }
+
+        .events-calendar {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .events-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--rosa-profondo);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover {
+            background: rgba(255,228,233,0.5);
+            border-radius: 10px;
+        }
+
+        .event-date {
+            background: linear-gradient(135deg, var(--rosa-scuro), var(--oro));
+            color: var(--bianco);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-right: 1rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .event-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .event-countdown {
+            color: var(--rosa-profondo);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* ============================================
+           SEZIONE: FUNZIONI SPECIALI
+        ============================================ */
+        .special-functions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .special-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .special-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--rosa-profondo);
+            margin-bottom: 1rem;
+        }
+
+        .poem-display {
+            background: linear-gradient(135deg, var(--oro-chiaro) 0%, var(--rosa-tenue) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: var(--rosa-profondo);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .generate-btn {
+            background: var(--oro);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            background: var(--rosa-scuro);
+            color: var(--bianco);
+            transform: scale(1.05);
+        }
+
+        .map-container {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, var(--rosa-tenue) 0%, var(--oro-chiaro) 100%);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .map-point {
+            position: absolute;
+            font-size: 1.5rem;
+            cursor: pointer;
+            animation: map-pulse 2s infinite;
+        }
+
+        @keyframes map-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, var(--rosa-scuro), var(--rosa-profondo));
+            color: var(--bianco);
+            padding: 1rem;
+            border-radius: 15px;
+            min-width: 60px;
+        }
+
+        .countdown-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255,182,193,0.3) 0%, rgba(255,215,0,0.3) 100%);
+        }
+
+        .final-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--rosa-profondo);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .love-explosion-btn {
+            background: linear-gradient(135deg, var(--rosa-scuro) 0%, var(--oro) 100%);
+            color: var(--bianco);
+            border: none;
+            padding: 1.5rem 4rem;
+            font-size: 2rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255,105,180,0.5);
+            transition: all 0.4s ease;
+        }
+
+        .love-explosion-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255,105,180,0.7);
+        }
+
+        .signature {
+            margin-top: 3rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .signature-date {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .password-box {
+                padding: 2rem;
+            }
+
+            .timer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .countdown-display {
+                flex-wrap: wrap;
+            }
+
+            .secret-love-message {
+                padding: 1.5rem 2rem;
+                font-size: 1.2rem;
+            }
+
+            .valentine-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .valentine-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .youtube-container iframe {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         SCHERMATA PASSWORD
+    ============================================ -->
+    <div id="password-screen">
+        <div class="password-box">
+            <div class="lock-icon">🔒</div>
+            <h2>Accesso Riservato</h2>
+            <p>Solo per gli occhi di Biscottina 💕</p>
+            
+            <input 
+                type="password" 
+                id="password-input" 
+                class="password-input" 
+                placeholder="Inserisci la password..."
+                onkeypress="if(event.key==='Enter') checkPassword()"
+            >
+            
+            <button class="password-btn" onclick="checkPassword()">
+                <i class="fas fa-heart"></i> Entra
+            </button>
+            
+            <div class="error-msg" id="error-msg">
+                <i class="fas fa-times-circle"></i> Password sbagliata! Riprova...
+            </div>
+            
+            <div class="hint">
+                💡 Suggerimento: è qualcosa di dolce che ti chiama lui...
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CONTENUTO PRINCIPALE (SITO NASCOSTO)
+    ============================================ -->
+    <div id="main-content">
+        
+        <!-- HEADER HERO -->
+        <header class="hero">
+            <h1 class="hero-title">
+                Per la mia <span class="highlight">Biscottina</span> ❤️
+            </h1>
+            <p class="hero-subtitle">Il mio amore, la mia dolcezza, il mio tutto</p>
+            
+            <div class="secret-message-container">
+                <div class="secret-hint">
+                    <i class="fas fa-heart"></i> Passa il mouse qui per un messaggio segreto...
+                </div>
+                <div class="secret-message">
+                    Sei la persona più speciale che abbia mai incontrato! 💕
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </header>
+
+        <!-- SEZIONE: DIVENTA IL MIO VALENTINO! 💝 -->
+        <section class="valentine-section" id="valentine">
+            <div class="valentine-box" id="valentineBox">
+                <div class="valentine-question-container" id="questionContainer">
+                    <h2 class="valentine-question">Biscottina... 💕</h2>
+                    <p class="valentine-subtitle">Vuoi diventare il mio Valentino?</p>
+                    
+                    <div class="valentine-buttons">
+                        <button class="valentine-btn valentine-btn-si" onclick="rispondiSi()">
+                            <i class="fas fa-heart"></i> SÌ! 💚
+                        </button>
+                        <button class="valentine-btn valentine-btn-no" id="noBtn" onmouseover="scappaNo()" onclick="rispondiNo()">
+                            <i class="fas fa-times"></i> No... 💔
+                        </button>
+                    </div>
+                </div>
+
+                <div class="valentine-success" id="successResponse">
+                    <div class="success-emoji">💕🎉💕</div>
+                    <h3 class="success-text">Hai fatto il mio cuore felice!</h3>
+                    <p class="success-subtext">Sei ufficialmente il mio Valentino!<br>Prometto di amarti per sempre 💖</p>
+                    <button class="try-again-btn" onclick="resetValentine()" style="margin-top: 2rem;">
+                        <i class="fas fa-redo"></i> Ricomincia
+                    </button>
+                </div>
+
+                <div class="valentine-sad" id="sadResponse">
+                    <div class="sad-emoji">😢💔</div>
+                    <h3 class="sad-text">Oh no... il mio cuore si è spezzato</h3>
+                    <p style="color: var(--text-light); margin-top: 1rem;">Ma so che mi ami davvero... 💕</p>
+                    <button class="try-again-btn" onclick="resetValentine()">
+                        <i class="fas fa-heart"></i> Riprova, ti prego!
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE: CANZONE YOUTUBE 🎵 -->
+        <section class="youtube-section">
+            <h2 class="youtube-title">
+                <i class="fas fa-music"></i> La NOSTRA canzone
+            </h2>
+            <div class="youtube-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/atRzwlp0iDk?autoplay=0&loop=1&playlist=atRzwlp0iDk" 
+                    title="La nostra canzone"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p style="margin-top: 1rem; color: var(--text-light); font-style: italic;">
+                🎵 Play per ascoltare la nostra canzone speciale
+            </p>
+        </section>
+
+        <!-- SEZIONE: PERCHÉ SEI SPECIALE -->
+        <section id="reasons">
+            <h2 class="section-title">Perché sei speciale</h2>
+            <div class="reasons-grid">
+                <div class="reason-card">
+                    <div class="reason-icon"><i class="fas fa-sun"></i></div>
+                    <h3 class="reason-title">Il tuo sorriso</h3>
+                    <p class="reason-text">Il tuo sorriso illumina ogni mia giornata. Sei la luce che guida i miei passi.</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon"><i class="fas fa-heart"></i></div>
+                    <h3 class="reason-title">Il tuo cuore</h3>
+                    <p class="reason-text">Il tuo cuore è il più dolce e generoso che conosca. Mi fai sentire amato ogni giorno.</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon"><i class="fas fa-star"></i></div>
+                    <h3 class="reason-title">La tua unicità</h3>
+                    <p class="reason-text">Sei unica al mondo, irripetibile, speciale in ogni piccolo dettaglio.</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon"><i class="fas fa-moon"></i></div>
+                    <h3 class="reason-title">La tua dolcezza</h3>
+                    <p class="reason-text">Anche nelle notti più buie, il tuo amore è la mia stella polare.</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon"><i class="fas fa-infinity"></i></div>
+                    <h3 class="reason-title">Il nostro amore</h3>
+                    <p class="reason-text">Il nostro amore è per sempre, senza fine, come l'universo stesso.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE: MESSAGGI SEGRETI -->
+        <section class="messages-section" id="messages">
+            <h2 class="section-title">Messaggi segreti</h2>
+            <button class="love-button" onclick="revealMessage()">
+                <i class="fas fa-heart"></i> Clicca se mi ami
+            </button>
+            <div class="message-display" id="messageDisplay">
+                <p style="color: var(--text-light); font-style: italic;">
+                    Clicca il bottone per scoprire un messaggio speciale... 💌
+                </p>
+            </div>
+        </section>
+
+        <!-- SEZIONE: IL NOSTRO TEMPO INSIEME -->
+        <section class="time-section" id="time">
+            <h2 class="section-title">Il nostro tempo insieme</h2>
+            <div class="anniversary-info">
+                <i class="fas fa-calendar-heart"></i> 
+                Insieme dal: <strong>01 Gennaio 2024</strong>
+            </div>
+            <div class="timer-container">
+                <div class="timer-box">
+                    <span class="timer-number" id="days">0</span>
+                    <span class="timer-label">Giorni</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="hours">0</span>
+                    <span class="timer-label">Ore</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="minutes">0</span>
+                    <span class="timer-label">Minuti</span>
+                </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="seconds">0</span>
+                    <span class="timer-label">Secondi</span>
+                </div>
+            </div>
+            <div class="events-calendar">
+                <h3 class="events-title"><i class="fas fa-calendar-alt"></i> Prossimi eventi speciali</h3>
+                <div class="event-item">
+                    <div class="event-date">14 Feb</div>
+                    <div class="event-name">San Valentino</div>
+                    <div class="event-countdown" id="valentine-countdown"></div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">15 Giu</div>
+                    <div class="event-name">Il tuo compleanno</div>
+                    <div class="event-countdown" id="birthday-countdown"></div>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">01 Gen</div>
+                    <div class="event-name">Il nostro anniversario</div>
+                    <div class="event-countdown" id="anniversary-countdown"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE: FUNZIONI SPECIALI -->
+        <section id="special">
+            <h2 class="section-title">Funzioni speciali</h2>
+            <div class="special-functions">
+                <div class="special-card">
+                    <h3><i class="fas fa-feather-alt"></i> Generatore di poesie</h3>
+                    <div class="poem-display" id="poemDisplay">
+                        Clicca per generare una poesia d'amore...
+                    </div>
+                    <button class="generate-btn" onclick="generatePoem()">
+                        <i class="fas fa-magic"></i> Genera poesia
+                    </button>
+                </div>
+                <div class="special-card">
+                    <h3><i class="fas fa-map-marked-alt"></i> La mappa dei nostri luoghi</h3>
+                    <div class="map-container">
+                        <div class="map-point" style="top: 30%; left: 20%;" onclick="alert('📍 Dove ci siamo conosciuti')">📍</div>
+                        <div class="map-point" style="top: 50%; left: 50%;" onclick="alert('🍽️ Il nostro ristorante preferito')">🍽️</div>
+                        <div class="map-point" style="top: 70%; left: 70%;" onclick="alert('💕 Il nostro posto speciale')">💕</div>
+                        <div class="map-point" style="top: 40%; left: 80%;" onclick="alert('💋 Il primo bacio')">💋</div>
+                    </div>
+                </div>
+                <div class="special-card">
+                    <h3><i class="fas fa-hourglass-half"></i> Countdown San Valentino</h3>
+                    <div class="countdown-display">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="vd-days">00</span>
+                            <span class="countdown-label">Giorni</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="vd-hours">00</span>
+                            <span class="countdown-label">Ore</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="vd-minutes">00</span>
+                            <span class="countdown-label">Min</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="vd-seconds">00</span>
+                            <span class="countdown-label">Sec</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p class="final-message">
+                Biscottina, sei il mio sogno diventato realtà.<br>
+                Ogni giorno con te è un regalo che custodisco nel cuore.<br>
+                Ti amo oggi, domani e per sempre. 💕
+            </p>
+            <button class="love-explosion-btn" onclick="loveExplosion()">
+                <i class="fas fa-heart"></i> Ti amo
+            </button>
+            <div class="signature">
+                Con tutto il mio amore,<br>
+                <strong>Il tuo Valentino</strong>
+                <div class="signature-date">
+                    <i class="fas fa-calendar"></i> San Valentino 2025
+                </div>
+            </div>
+        </footer>
+
+    </div> <!-- FINE MAIN CONTENT -->
+
+    <script>
+        // ============================================
+        // CONFIGURAZIONE PASSWORD
+        // ============================================
+        const CORRECT_PASSWORD = "biscottina"; // 🔑 CAMBIA QUESTA PASSWORD!
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.toLowerCase().trim();
+            const errorMsg = document.getElementById('error-msg');
+            const passwordScreen = document.getElementById('password-screen');
+            const mainContent = document.getElementById('main-content');
+
+            if (input === CORRECT_PASSWORD) {
+                // Password corretta!
+                passwordScreen.style.opacity = '0';
+                setTimeout(() => {
+                    passwordScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    // Animazione ingresso
+                    document.body.style.animation = 'fade-in-up 1s ease';
+                }, 500);
+                
+                // Effetto cuori
+                createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2, 30);
+            } else {
+                // Password sbagliata
+                errorMsg.style.display = 'block';
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+                
+                // Shake animation
+                const box = document.querySelector('.password-box');
+                box.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    box.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Animazione shake per errore
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ============================================
+        // DATA DI INIZIO RELAZIONE
+        // ============================================
+        const START_DATE = new Date('2024-01-01T00:00:00');
+
+        // ============================================
+        // MESSAGGI ROMANTICI
+        // ============================================
+        const loveMessages = [
+            "Sei la ragione per cui il mio cuore batte più forte ogni giorno. 💓",
+            "Nel tuo sorriso trovo la mia felicità. 😊",
+            "Ogni momento con te è un tesoro che custodisco per sempre. 💎",
+            "Sei il mio sogno sveglio, la mia realtà più bella. 🌟",
+            "Il tuo amore è la melodia più dolce che abbia mai sentito. 🎵",
+            "Con te ho imparato cosa significa amare davvero. 💕",
+            "Sei la stella che illumina ogni mia notte buia. ⭐",
+            "Il tuo abbraccio è il mio posto preferito al mondo. 🤗",
+            "Ogni giorno mi innamoro di te come fosse il primo. 💘",
+            "Sei il mio oggi, il mio domani, il mio per sempre. 🔮",
+            "Il tuo nome è la parola più dolce che possa pronunciare. 💬",
+            "Nel tuo amore ho trovato la mia casa. 🏠",
+            "Sei il capolavoro più bello che la vita mi abbia regalato. 🎨",
+            "Il tempo con te vola, ma il nostro amore rimane eterno. ⏳",
+            "Sei la mia buona stella, il mio angelo custode. 👼"
+        ];
+
+        // ============================================
+        // POESIE ROMANTICHE
+        // ============================================
+        const poems = [
+            "Rosa di maggio, fiore del mio cuore,\nNel tuo amore trovo il mio valore.",
+            "Stella cadente nel cielo blu,\nIl mio desiderio sei solo tu.",
+            "Ogni battito del mio cuore\nÈ una nota del nostro amore.",
+            "Sei la poesia che non finisce mai,\nLa storia d'amore più bella che mai.",
+            "Nel giardino dei sogni ho trovato te,\nLa rosa più bella, la mia dolce metà.",
+            "L'amore vero non ha fine né confini,\nNel tuo sguardo trovo i miei destini.",
+            "Come la luna illumina la notte,\nTu illumini la mia vita, dolce Biscottina.",
+            "Sei il sole dei miei giorni grigi,\nLa gioia che ogni mia tristezza fugge.",
+            "Nel libro della vita sei il mio capitolo preferito,\nLa storia d'amore più bello che abbia mai scritto.",
+            "Amarti è come respirare,\nNaturale, essenziale, impossibile da arrestare."
+        ];
+
+        // ============================================
+        // SEZIONE VALENTINO - SÌ/NO
+        // ============================================
+        let noClickCount = 0;
+        const noMessages = [
+            "Are you sure? 😢",
+            "Davvero sicura? 💔",
+            "Pensaci bene... 🥺",
+            "Il mio cuore si sta spezzando... 💔",
+            "Non puoi dirmi di no! 😭",
+            "Sono sicuro che mi ami! 💕",
+            "Riprova... per favore! 🙏",
+            "Non arrenderti all'amore! 💘"
+        ];
+
+        function rispondiSi() {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('successResponse').style.display = 'block';
+            createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2, 100);
+            playMusic();
+        }
+
+        function rispondiNo() {
+            noClickCount++;
+            if (noClickCount >= 3) {
+                document.getElementById('questionContainer').style.display = 'none';
+                document.getElementById('sadResponse').style.display = 'block';
+            } else {
+                alert(noMessages[noClickCount % noMessages.length]);
+            }
+        }
+
+        function scappaNo() {
+            const noBtn = document.getElementById('noBtn');
+            const box = document.getElementById('valentineBox');
+            const boxRect = box.getBoundingClientRect();
+            
+            const maxX = boxRect.width - noBtn.offsetWidth - 40;
+            const maxY = boxRect.height - noBtn.offsetHeight - 100;
+            
+            const newX = Math.random() * maxX + 20;
+            const newY = Math.random() * maxY + 80;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            noBtn.style.transition = 'all 0.3s ease';
+        }
+
+        function resetValentine() {
+            noClickCount = 0;
+            document.getElementById('questionContainer').style.display = 'block';
+            document.getElementById('successResponse').style.display = 'none';
+            document.getElementById('sadResponse').style.display = 'none';
+            
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'static';
+        }
+
+        // ============================================
+        // MUSICA YOUTUBE
+        // ============================================
+        function playMusic() {
+            const iframe = document.querySelector('.youtube-container iframe');
+            if (iframe) {
+                const src = iframe.src;
+                if (!src.includes('autoplay=1')) {
+                    iframe.src = src.replace('autoplay=0', 'autoplay=1');
+                }
+            }
+        }
+
+        // ============================================
+        // TIMER RELAZIONE
+        // ============================================
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - START_DATE;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // ============================================
+        // COUNTDOWN EVENTI
+        // ============================================
+        function updateCountdowns() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            let valentine = new Date(currentYear, 1, 14);
+            if (now > valentine) valentine = new Date(currentYear + 1, 1, 14);
+            updateEventCountdown('valentine-countdown', valentine);
+            
+            let birthday = new Date(currentYear, 5, 15);
+            if (now > birthday) birthday = new Date(currentYear + 1, 5, 15);
+            updateEventCountdown('birthday-countdown', birthday);
+            
+            let anniversary = new Date(currentYear, 0, 1);
+            if (now > anniversary) anniversary = new Date(currentYear + 1, 0, 1);
+            updateEventCountdown('anniversary-countdown', anniversary);
+            
+            const vdDiff = valentine - now;
+            document.getElementById('vd-days').textContent = String(Math.floor(vdDiff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+            document.getElementById('vd-hours').textContent = String(Math.floor((vdDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            document.getElementById('vd-minutes').textContent = String(Math.floor((vdDiff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            document.getElementById('vd-seconds').textContent = String(Math.floor((vdDiff % (1000 * 60)) / 1000)).padStart(2, '0');
+        }
+
+        function updateEventCountdown(elementId, targetDate) {
+            const now = new Date();
+            const diff = targetDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = `Mancano ${days} giorni`;
+            }
+        }
+
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns();
+
+        // ============================================
+        // MESSAGGI SEGRETI
+        // ============================================
+        function revealMessage() {
+            const display = document.getElementById('messageDisplay');
+            const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            
+            display.innerHTML = `<div class="secret-love-message">${randomMessage}</div>`;
+            createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2, 20);
+            
+            setTimeout(() => {
+                const message = display.querySelector('.secret-love-message');
+                if (message) {
+                    message.classList.add('fade-out');
+                    setTimeout(() => {
+                        display.innerHTML = `
+                            <p style="color: var(--text-light); font-style: italic;">
+                                Clicca di nuovo per un altro messaggio... 💌
+                            </p>
+                        `;
+                    }, 1000);
+                }
+            }, 8000);
+        }
+
+        // ============================================
+        // GENERATORE DI POESIE
+        // ============================================
+        function generatePoem() {
+            const display = document.getElementById('poemDisplay');
+            const randomPoem = poems[Math.floor(Math.random() * poems.length)];
+            display.style.opacity = '0';
+            
+            setTimeout(() => {
+                display.innerHTML = randomPoem.replace(/\n/g, '<br>');
+                display.style.opacity = '1';
+            }, 300);
+            
+            createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2, 10);
+        }
+
+        // ============================================
+        // EFFETTO CUORI
+        // ============================================
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+            if (e.target.closest('.password-box')) return; // Non su schermata password
+            createHeart(e.clientX, e.clientY);
+        });
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'particle heart-particle';
+            heart.innerHTML = '<i class="fas fa-heart"></i>';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function createHeartExplosion(x, y, count = 20) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const offsetX = (Math.random() - 0.5) * 200;
+                    const offsetY = (Math.random() - 0.5) * 200;
+                    createHeart(x + offsetX, y + offsetY);
+                }, i * 50);
+            }
+        }
+
+        // ============================================
+        // ESLOSIONE D'AMORE
+        // ============================================
+        function loveExplosion() {
+            createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2, 100);
+            setTimeout(() => {
+                alert('🎉 Ti amo tantissimo, Biscottina! 🎉');
+            }, 500);
+        }
+
+        // ============================================
+        // INIZIALIZZAZIONE
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Focus automatico sull'input password
+            document.getElementById('password-input').focus();
+        });
+    </script>
+</body>
+</html>
